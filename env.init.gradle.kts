@@ -2,13 +2,13 @@ import org.gradle.internal.nativeintegration.ProcessEnvironment
 import org.gradle.kotlin.dsl.support.serviceOf
 import java.io.FileNotFoundException
 
-run {
+rootProject {
     val processEnvironment = serviceOf<ProcessEnvironment>()
-    val envFile = File(processEnvironment.processDir, ".env")
+    val envFile = rootProject.file(".env")
     try {
         envFile.bufferedReader()
     } catch (_: FileNotFoundException) {
-        return@run
+        return@rootProject
     }.useLines {
         it.forEach {
             if (it.isEmpty() || it[0] == '#') return@forEach
